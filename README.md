@@ -78,10 +78,38 @@ If you would like to use as an ES6 module jump to [ES6 Modules](#es6-modules) be
 
 If you are using the minified version and linking to it, include the accordion script and initialize it.
 
+Customize the options to your liking. Below are the default options available. Only include the ones you plan to change. If you do change the class names makes sure to update your SASS files accordingly.
+
 ```html
 <script src="/dist/js/accordions.min.js"></script>
 <script>
- const accordion = new SuperSimpleAccordions('.accordion');
+ const accordions = new SuperSimpleAccordions('.accordion', {
+      // ALL available options
+
+      // Accordion parts
+       accordionClass: 'accordion',
+       headerClass: 'accordion__title',
+       contentClass: 'accordion__content',
+       panelClass: 'accordion__panel',
+
+       // Toggle Button
+       toggleBtnClass: 'accordion__toggle',
+
+       // Icons
+       icons: true, // true or false
+       iconsClass: 'accordion__icon',
+       iconsSymbol: 'plus-minus', // arrow or plus-minus
+       iconsPosition: 'left', // right or left
+
+       // Expand All features
+       expandAllBtn: true, // true or false 
+       expandAllClass: 'accordion__toggle-all',
+       expandAllContainerClass: 'accordion__toggle-all-container',
+       expandSelectClass: 'expanded',
+       expandAllOpenText: 'Expand All',
+       expandAllCloseText: 'Collapse All',
+       expanded: false, // accordions collapsed or expanded by default
+    })
 </script>
 ```
 ## ES6 Modules
@@ -93,7 +121,7 @@ $ npm install
 
 Open up main.js in the src directory and customize the options to your liking. Below are the default options available. Only include the ones you plan to change.
 
-main.js
+index.js
 
 ```js
 import SuperSimpleAccordions from './accordions';
@@ -142,6 +170,23 @@ This will create a file named accordions.js in the dist directory.
 ```html
 <script src="/dist/js/accordions.js"></script>
 ```
+
+## Browser Compatibility
+
+Super Simple Accordion works in all modern browsers and back to IE9. It includes a polyfill for Element.closest.
+
+If you are using the ES6 module and want to include the polyfill just import into the entrypoint.
+
+index.js
+```js
+import './js/closest_polyfill.js'
+```
+
+## Shout Outs!
+
+Huge thanks to [Chris Ferdinandi](https://gomakethings.com/about/) for being an amazing Vanilla JS ambassador. Between his daily tips at [Go Make Things](https://gomakethings.com/articles/) and his priceless [Toolkit](https://vanillajstoolkit.com/) I don't know if I would have made it this far.
+
+When it comes to the accessibility piece, a lot of my inspiration came from [Heydon Pickering](https://twitter.com/heydonworks) and his [Inclusive Components](https://inclusive-components.design/).
 
 ## TODO
 

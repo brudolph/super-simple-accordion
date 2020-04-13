@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Simple Accordions</title>
-  <link rel="stylesheet" href="/build/css/main.css" />
+  <link rel="stylesheet" href="/dist/css/main.css" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -59,7 +59,37 @@
 
   <!-- If you are not using ES6 modules use the code below -->
   <!-- The js file can live anywhere you like -->
-  <script src="/build/js/accordion.js"></script>
+  <script src="/dist/js/accordions.min.js"></script>
+  <script>
+
+    const accordions = new SuperSimpleAccordions('.accordion', {
+      // ALL available options
+
+      // Accordion parts
+      accordionClass: 'accordion',
+      headerClass: 'accordion__title',
+      contentClass: 'accordion__content',
+      panelClass: 'accordion__panel',
+
+      // Toggle Button
+      toggleBtnClass: 'accordion__toggle',
+
+      // Icons
+      icons: true, // true or false
+      iconsClass: 'accordion__icon',
+      iconsSymbol: 'arrow', // arrow or plus-minus
+      iconsPosition: 'left', // right or left
+
+      // Expand All features
+      expandAllBtn: true, // true or false 
+      expandAllClass: 'accordion__toggle-all',
+      expandAllContainerClass: 'accordion__toggle-all-container',
+      expandSelectClass: 'expanded',
+      expandAllOpenText: 'Expand All',
+      expandAllCloseText: 'Collapse All',
+      expanded: true, // accordions collapsed by default but an be expanded
+    })
+  </script>
 
 </body>
 

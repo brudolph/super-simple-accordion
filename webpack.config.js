@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'production') buildPath = './dist';
 
 module.exports = {
   entry: {
-    main: ['@babel/polyfill', './src/index.js', './src/scss/main.scss'],
+    main: ['./src/index.js', './src/scss/main.scss'],
   },
 
   output: {
