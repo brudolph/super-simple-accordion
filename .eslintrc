@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "wesbos"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "/dist/js/*.js"
+      ],
+      "rules": {
+        "ignore": "on"
+      }
+    }
+  ]
+}

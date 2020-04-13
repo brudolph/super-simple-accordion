@@ -1,0 +1,72 @@
+{
+  "name": "super-simple-accordion",
+  "version": "2.0.0",
+  "description": "Super simple, accessible accordion",
+  "main": "main.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack --mode=development",
+    "prod": "cross-env NODE_ENV=production webpack --progress --hide-modules --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "wsp",
+    "javascript",
+    "accordion",
+    "npm"
+  ],
+  "author": "WSP",
+  "contributors": [
+    "Ben Rudolph <momentumdd@me.com>",
+    "Josh Gipper <jgipper@gmail.com>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-arrow-functions": "^7.2.0",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-eslint": "^9.0.0",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-global-scope": "^1.0.5",
+    "cross-env": "^5.2.0",
+    "css-loader": "^2.1.0",
+    "cssnano": "^4.1.8",
+    "eslint": "^5.14.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-config-wesbos": "0.0.19",
+    "eslint-plugin-html": "^5.0.3",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-hooks": "^1.3.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "node-sass": "^4.12.0",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.5.0",
+    "prettier": "^1.16.4",
+    "react": "^16.13.1",
+    "react-hooks": "^1.0.1",
+    "sass": "^1.25.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.4"
+  },
+  "browserslist": [
+    ">0.2%",
+    "last 2 Chrome versions",
+    "last 2 Firefox versions",
+    "last 2 Edge versions",
+    "last 2 Samsung versions",
+    "Safari >= 10",
+    "IE 11",
+    "iOS >= 10"
+  ]
+}
