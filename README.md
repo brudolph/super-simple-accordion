@@ -33,7 +33,7 @@ In your project include the following markup.
 <section>
 <h1>Section Title for these grouped accordions</h1>
 
-  <article id="faq1" class="accordion">
+  <article class="accordion">
     <h2 class="accordion__title">
       What is an accordion?
     </h2>
@@ -214,11 +214,6 @@ index.js
 import './js/closest_polyfill.js'
 ```
 
-## Shout Outs!
-
-Huge thanks to [Chris Ferdinandi](https://gomakethings.com/about/) for being an amazing Vanilla JS ambassador. Between his daily tips at [Go Make Things](https://gomakethings.com/articles/) and his priceless [Toolkit](https://vanillajstoolkit.com/) I don't know if I would have made it this far.
-
-When it comes to the accessibility piece, a lot of my inspiration came from [Heydon Pickering](https://twitter.com/heydonworks) and his [Inclusive Components](https://inclusive-components.design/).
 
 ## TODO
 
