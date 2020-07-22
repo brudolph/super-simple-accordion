@@ -207,7 +207,7 @@ This will create a file named accordions.js in the dist directory.
 
 Super Simple Accordion works in all modern browsers and back to IE9. It includes a polyfill for Element.closest.
 
-If you are using the ES6 module and want to include the polyfill just import into the entrypoint.
+If you are using ES6 modules and want to include the polyfill just import into the entrypoint.
 
 index.js
 ```js
