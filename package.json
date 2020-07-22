@@ -1,6 +1,6 @@
 {
   "name": "super-simple-accordion",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Super simple, accessible accordion",
   "main": "main.js",
   "scripts": {
@@ -58,7 +58,8 @@
     "sass-loader": "^8.0.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.4"
+    "webpack-cli": "^3.3.4",
+    "webpack-dev-server": "^3.10.3"
   },
   "browserslist": [
     ">0.2%",

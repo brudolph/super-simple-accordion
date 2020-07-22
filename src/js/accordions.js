@@ -1,7 +1,7 @@
-;(function (root, factory) {
+; (function (root, factory) {
   // eslint-disable-next-line no-undef
   if (typeof define === 'function' && define.amd) {
-    define([], function() {
+    define([], function () {
       return factory(root);
     });
   } else if (typeof exports === 'object') {
@@ -14,13 +14,13 @@
   typeof global !== 'undefined'
     ? global
     : typeof window !== 'undefined'
-    ? window
-    : this,
-  function(window) {
+      ? window
+      : this,
+  function (window) {
     // Use strict mode
     'use strict';
 
-    
+
     // Create an empty plugin object
     const plugin = {};
 
@@ -110,7 +110,7 @@
      * @param  {String} toggle The toggle button
      * @return {void} 
      */
-    const accordionIconSetup = function(toggle) {
+    const accordionIconSetup = function (toggle) {
       const toggleBtn = toggle;
       if (plugin.settings.icons === true) {
         const iconContainer = document.createElement('span');
@@ -130,7 +130,7 @@
      * @param  {String} id The accordion id.
      * @return {void}
      */
-    const accordionContentSetup = function(content, id) {
+    const accordionContentSetup = function (content, id) {
       // Get accordion content from plugin.settings.accordionClass container
       const accordionPanel = content.querySelector(
         `.${plugin.settings.panelClass}`
@@ -166,7 +166,7 @@
      * @param  {String} btnId The accordion button id.
      *
      */
-    const accordionToggleSetup = function(content, btnId) {
+    const accordionToggleSetup = function (content, btnId) {
       // Get accordion header from plugin.settings.accordionClass
       const accordionHeader = content.querySelector(
         `.${plugin.settings.headerClass}`
@@ -182,7 +182,7 @@
       } else {
         toggle.setAttribute('aria-expanded', 'true');
       }
-      
+
 
       // Get content from existing header and add to button
       toggle.innerHTML = accordionHeader.innerHTML;
@@ -203,7 +203,7 @@
      * @function toggleAllSetup
      * @return {void}
      */
-    const toggleAllSetup = function() {
+    const toggleAllSetup = function () {
       // find first accodrion if only one the return
       const firstAccordion = document.querySelector(
         `.${plugin.settings.accordionClass}`
@@ -245,7 +245,7 @@
      * @param  {String} direction   The direction of the accordion Expand/Collapse
      * @return {void}
      */
-    const toggleButton = function(targetElem, direction) {
+    const toggleButton = function (targetElem, direction) {
       if (direction === 'expand') {
         targetElem.setAttribute('aria-expanded', 'true');
       } else {
@@ -260,7 +260,7 @@
      * @param  {String} direction The direction of the accordion Expand/Collapse
      * @return {void}
      */
-    const toggleAccordion = function(targetElem, event, direction) {
+    const toggleAccordion = function (targetElem, event, direction) {
       const controls = targetElem.getAttribute('aria-controls');
       const controlsElem = document.getElementById(controls);
       const controlsElemHeight = controlsElem.scrollHeight;
@@ -271,7 +271,7 @@
       }
 
       function timeoutSet(element) {
-        setTimeout(function() {
+        setTimeout(function () {
           element.style.height = 'auto';
         }, 300);
       }
@@ -283,7 +283,7 @@
       } else if (direction === 'collapse' && toggled === 'false') {
         controlsElem.style.height = `${controlsElem.scrollHeight}px`;
         controlsElem.setAttribute('aria-hidden', 'true');
-        setTimeout(function() {
+        setTimeout(function () {
           controlsElem.setAttribute('aria-hidden', true);
           controlsElem.style.height = `${0}px`;
         }, 50);
@@ -331,7 +331,7 @@
      * @param  {String} event mouse click
      * @return {type} {description}
      */
-    const clickHandler = function(event) {
+    const clickHandler = function (event) {
       const toggleBtn = event.target.closest(
         `.${plugin.settings.toggleBtnClass}`
       );
@@ -358,23 +358,24 @@
      */
     const keyboardHandler = function (event) {
       if (event.key == 'Enter' || event.key == ' ') {
-        event.preventDefault()
         const toggleBtn = event.target.closest(
           `.${plugin.settings.toggleBtnClass}`
         );
         const toggleAll = event.target.closest(
           `.${plugin.settings.expandAllClass}`
         );
-      const direction =
-        event.target.getAttribute('aria-expanded') === 'true'
-          ? 'collapse'
-          : 'expand';
+        const direction =
+          event.target.getAttribute('aria-expanded') === 'true'
+            ? 'collapse'
+            : 'expand';
 
-      if (toggleBtn) {
-        toggleAccordion(toggleBtn, event, direction);
-      }
-      if (toggleAll) {
-        toggleAllAccordions(toggleAll, event, direction);
+        if (toggleBtn) {
+          event.preventDefault()
+          toggleAccordion(toggleBtn, event, direction);
+        }
+        if (toggleAll) {
+          event.preventDefault()
+          toggleAllAccordions(toggleAll, event, direction);
         }
       }
     }
@@ -387,7 +388,7 @@
       setup() {
         const accordions = document.querySelectorAll(plugin.element);
         let btnId = 0;
-        Array.prototype.forEach.call(accordions, function(accordion) {
+        Array.prototype.forEach.call(accordions, function (accordion) {
           btnId += 1;
           accordionToggleSetup(accordion, btnId);
         });
