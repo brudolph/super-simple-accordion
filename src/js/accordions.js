@@ -150,10 +150,12 @@
 
       // Check to see if the accordions are set to be expanded or collapsed
       if (plugin.settings.expanded === false) {
-        accordionPanel.setAttribute('aria-hidden', 'true');
-        accordionPanel.style.height = '0px';
+        accordionPanel.setAttribute("aria-hidden", "true");
+        accordionPanel.setAttribute("hidden", "");
+        accordionPanel.style.height = "0px";
       } else {
-        accordionPanel.setAttribute('aria-hidden', 'false');
+        accordionPanel.setAttribute("aria-hidden", "false");
+        accordionPanel.removeAttribute("hidden");
         accordionPanel.style.height = `${accordionPanel.scrollHeight}px`;
       }
     };
@@ -276,17 +278,21 @@
         }, 300);
       }
 
-      if (direction === 'expand' && toggled === 'true') {
-        controlsElem.style.height = `${controlsElemHeight}px`;
-        controlsElem.setAttribute('aria-hidden', 'false');
-        timeoutSet(controlsElem);
-      } else if (direction === 'collapse' && toggled === 'false') {
+      if (direction === "expand" && toggled === "true") {
+        controlsElem.removeAttribute("hidden");
         controlsElem.style.height = `${controlsElem.scrollHeight}px`;
-        controlsElem.setAttribute('aria-hidden', 'true');
+        controlsElem.setAttribute("aria-hidden", "false");
+        timeoutSet(controlsElem);
+      } else if (direction === "collapse" && toggled === "false") {
+        controlsElem.style.height = `${controlsElem.scrollHeight}px`;
+        controlsElem.setAttribute("aria-hidden", "true");
         setTimeout(function () {
-          controlsElem.setAttribute('aria-hidden', true);
+          controlsElem.setAttribute("aria-hidden", true);
           controlsElem.style.height = `${0}px`;
         }, 50);
+        setTimeout(function () {
+          controlsElem.setAttribute("hidden", "");
+        }, 150);
       }
 
       toggleButton(targetElem, direction);

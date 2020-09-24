@@ -1,6 +1,6 @@
 {
   "name": "super-simple-accordion",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "Super simple, accessible accordion",
   "main": "main.js",
   "scripts": {
@@ -12,15 +12,13 @@
     "url": "https://github.com/brudolph/super-simple-accordion"
   },
   "keywords": [
-    "wsp",
     "javascript",
     "accordion",
     "npm"
   ],
-  "author": "WSP",
+  "author": "Ben Rudolph",
   "contributors": [
-    "Ben Rudolph <momentumdd@me.com>",
-    "Josh Gipper <jgipper@gmail.com>"
+    "Ben Rudolph <momentumdd@me.com>"
   ],
   "license": "MIT",
   "devDependencies": {
