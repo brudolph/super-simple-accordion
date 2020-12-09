@@ -135,6 +135,8 @@
       const accordionPanel = content.querySelector(
         `.${plugin.settings.panelClass}`
       );
+      if (!accordionPanel) return;
+      
       // Create div for accordion content add content class
       const accordionContent = document.createElement('div');
       accordionContent.className = plugin.settings.contentClass;
@@ -173,6 +175,7 @@
       const accordionHeader = content.querySelector(
         `.${plugin.settings.headerClass}`
       );
+      if (!accordionHeader) return;
 
       // Create a toggle button, add toggle class and aria attributes
       const toggle = document.createElement('button');
