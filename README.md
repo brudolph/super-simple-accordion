@@ -70,13 +70,12 @@ This is just some example markup and can be changed to fit your needs. You will 
 ## Step 3. Include JavaScript
 If you are using the minified version and linking to it, include the accordion script and initialize it.
 
-Customize the options to your liking. Below are the default options available. Only include the ones you plan to change. If you do change the class names makes sure to update your SASS files accordingly.
+Customize the options to your liking. Below are the default options available. Only include the ones you plan to change. If you do change the class names makes sure to update your CSS/SASS files accordingly. There is a SASS file you can copy into your own project. It is located at src/scss/components/_accordion.scss. This is where the plus-minus and arrow styling is located.
 
 ```html
 <script src="/dist/js/accordions.min.js"></script>
 <script>
  const accordions = new SuperSimpleAccordions('.accordion', {
-      // ALL available options
 
       // Accordion parts
        accordionClass: 'accordion',
@@ -151,7 +150,7 @@ $ npm install
 
 ```
 
-Open up main.js in the src directory and customize the options to your liking. Below are the default options available. Only include the ones you plan to change.
+Open up index.js in the src directory and customize the options to your liking. Below are the default options available. Only include the ones you plan to change.
 
 index.js
 

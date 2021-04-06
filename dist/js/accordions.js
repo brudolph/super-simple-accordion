@@ -1,1 +1,444 @@
-!function(t){var e={};function n(o){if(e[o])return e[o].exports;var i=e[o]={i:o,l:!1,exports:{}};return t[o].call(i.exports,i,i.exports,n),i.l=!0,i.exports}n.m=t,n.c=e,n.d=function(t,e,o){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:o})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var o=Object.create(null);if(n.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var i in t)n.d(o,i,function(e){return t[e]}.bind(null,i));return o},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=1)}([function(t,e,n){(function(n){var o;void 0!==n||"undefined"!=typeof window&&window,void 0===(o=function(){return function(t){"use strict";var e={},n={accordionClass:"accordion",headerClass:"accordion__title",contentClass:"accordion__content",panelClass:"accordion__panel",toggleBtnClass:"accordion__toggle",icons:!0,iconsSymbol:"plus-minus",iconsPosition:"left",expandAllBtn:!0,expandAllClass:"accordion__toggle-all",expandAllContainerClass:"accordion__toggle-all-container",expandSelectClass:"expanded",expandAllOpenText:"Expand All",expandAllCloseText:"Collapse All",expanded:!1};function o(t,o){e.this=this,e.element=t,e.defaults=n,e.options=o,e.settings=function t(){var e=arguments.length;if(!(e<1)){if(e<2)return arguments[0];for(var n=1;n<e;n++)for(var o in arguments[n])"[object Object]"===Object.prototype.toString.call(arguments[n][o])?arguments[0][o]=t(arguments[0][o]||{},arguments[n][o]):arguments[0][o]=arguments[n][o];return arguments[0]}}(n,o),e.this.init()}var i=function(t,e,n){var o,i=t.getAttribute("aria-controls"),r=document.getElementById(i),a=(r.scrollHeight,r.getAttribute("aria-hidden"));e&&e.preventDefault(),"expand"===n&&"true"===a?(r.removeAttribute("hidden"),r.style.height="".concat(r.scrollHeight,"px"),r.setAttribute("aria-hidden","false"),o=r,setTimeout((function(){o.style.height="auto"}),300)):"collapse"===n&&"false"===a&&(r.style.height="".concat(r.scrollHeight,"px"),r.setAttribute("aria-hidden","true"),setTimeout((function(){r.setAttribute("aria-hidden",!0),r.style.height="".concat(0,"px")}),50),setTimeout((function(){r.setAttribute("hidden","")}),150)),function(t,e){"expand"===e?t.setAttribute("aria-expanded","true"):t.setAttribute("aria-expanded","false")}(t,n)},r=function(t,n,o){n&&n.preventDefault();var r=document.querySelectorAll(".".concat(e.settings.toggleBtnClass));Array.prototype.forEach.call(r,(function(t){i(t,n,o)})),t.setAttribute("aria-expanded","true"===t.getAttribute("aria-expanded")?"false":"true"),t.textContent=t.textContent===e.settings.expandAllOpenText?t.textContent=e.settings.expandAllCloseText:t.textContent=e.settings.expandAllOpenText},a=function(t){var n=t.target.closest(".".concat(e.settings.toggleBtnClass)),o=t.target.closest(".".concat(e.settings.expandAllClass)),a="true"===t.target.getAttribute("aria-expanded")?"collapse":"expand";n&&i(n,t,a),o&&r(o,t,a)},s=function(t){if("Enter"==t.key||" "==t.key){var n=t.target.closest(".".concat(e.settings.toggleBtnClass)),o=t.target.closest(".".concat(e.settings.expandAllClass)),a="true"===t.target.getAttribute("aria-expanded")?"collapse":"expand";n&&(t.preventDefault(),i(n,t,a)),o&&(t.preventDefault(),r(o,t,a))}};return o.prototype={setup:function(){var t=document.querySelectorAll(e.element),n=0;Array.prototype.forEach.call(t,(function(t){!function(t,n){var o=t.querySelector(".".concat(e.settings.headerClass)),i=document.createElement("button");i.className=e.settings.toggleBtnClass,i.setAttribute("aria-controls","accordion".concat(n)),!1===e.settings.expanded?i.setAttribute("aria-expanded","false"):i.setAttribute("aria-expanded","true"),i.innerHTML=o.innerHTML,o.innerHTML="",o.appendChild(i),function(t,n){var o=t.querySelector(".".concat(e.settings.panelClass)),i=document.createElement("div");i.className=e.settings.contentClass,i.innerHTML=o.innerHTML,o.innerHTML="",o.appendChild(i),o.setAttribute("id","accordion".concat(n)),!1===e.settings.expanded?(o.setAttribute("aria-hidden","true"),o.setAttribute("hidden",""),o.style.height="0px"):(o.setAttribute("aria-hidden","false"),o.removeAttribute("hidden"),o.style.height="".concat(o.scrollHeight,"px"))}(t,n),function(t){var n=t;if(!0===e.settings.icons){var o=document.createElement("span");o.classList.add(e.settings.iconsSymbol),o.classList.add(e.settings.iconsPosition),t.appendChild(o)}else n.classList.add("icon-hidden")}(i)}(t,n+=1)})),e.settings.expandAllBtn&&t.length>1&&function(){var t=document.querySelector(".".concat(e.settings.accordionClass));if(t){var n=document.createElement("div");n.className=e.settings.expandAllContainerClass;var o=document.createElement("button");o.className=e.settings.expandAllClass,!1===e.settings.expanded?(o.setAttribute("aria-expanded","false"),o.textContent=e.settings.expandAllOpenText):(o.setAttribute("aria-expanded","true"),o.textContent=e.settings.expandAllCloseText),n.appendChild(o),t.parentNode.insertBefore(n,t)}}()},init:function(){if(!e.element)return!1;e.this.setup(),document.addEventListener("click",a,!1),document.addEventListener("keydown",s,!1)}},o}()}.apply(e,[]))||(t.exports=o)}).call(this,n(3))},function(t,e,n){n(2),t.exports=n(4)},function(t,e,n){"use strict";n.r(e);var o=n(0),i=n.n(o);if(document.querySelector(".accordion"))new i.a(".accordion",{icons:!0,iconsSymbol:"arrow",iconsPosition:"right"})},function(t,e){function n(t){return(n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var o;o=function(){return this}();try{o=o||new Function("return this")()}catch(t){"object"===("undefined"==typeof window?"undefined":n(window))&&(o=window)}t.exports=o},function(t,e,n){}]);
+(function(root, factory) {
+    // eslint-disable-next-line no-undef
+    if (typeof define === "function" && define.amd) {
+      define([], function() {
+        return factory(root);
+      });
+    } else if (typeof exports === "object") {
+      module.exports = factory(root);
+    } else {
+      root.SuperSimpleAccordions = factory(root);
+    }
+  })(
+    // eslint-disable-next-line no-nested-ternary
+    typeof global !== "undefined"
+      ? global
+      : typeof window !== "undefined"
+      ? window
+      : this,
+    function(window) {
+      // Use strict mode
+      "use strict";
+  
+      // Create an empty plugin object
+      const plugin = {};
+  
+      // Set the plugin defaults
+      const defaults = {
+        // Accordion parts
+        accordionClass: "accordion",
+        headerClass: "accordion__title",
+        contentClass: "accordion__content",
+        panelClass: "accordion__panel",
+  
+        // Toggle Button
+        toggleBtnClass: "accordion__toggle",
+  
+        // Icons
+        icons: true,
+        iconsSymbol: "plus-minus", // arrow
+        iconsPosition: "left", // right
+  
+        // Expand All features
+        expandAllBtn: true,
+        expandAllClass: "accordion__toggle-all",
+        expandAllContainerClass: "accordion__toggle-all-container",
+        expandSelectClass: "expanded",
+        expandAllOpenText: "Expand All",
+        expandAllCloseText: "Collapse All",
+        expanded: false, // expanded or collapsed by default
+      };
+  
+      /*!
+       * Deep merge two or more objects into the first.
+       * (c) 2019 Chris Ferdinandi, MIT License, https://gomakethings.com
+       * @param   {Object} objects  The objects to merge together
+       * @returns {Object}          Merged values of defaults and options
+       */
+      const deepMerge = function() {
+        // Make sure there are objects to merge
+        var len = arguments.length;
+        if (len < 1) return;
+        if (len < 2) return arguments[0];
+  
+        // Merge all objects into first
+        for (let i = 1; i < len; i++) {
+          for (let key in arguments[i]) {
+            // If it's an object, recursively merge
+            // Otherwise, push to key
+            if (
+              Object.prototype.toString.call(arguments[i][key]) ===
+              "[object Object]"
+            ) {
+              arguments[0][key] = deepMerge(
+                arguments[0][key] || {},
+                arguments[i][key]
+              );
+            } else {
+              arguments[0][key] = arguments[i][key];
+            }
+          }
+        }
+  
+        return arguments[0];
+      };
+  
+      /**
+       * Constructor.
+       * @param  {String}  element  The selector element(s).
+       * @param  {Object}   options  The plugin options.
+       * @return {void}
+       */
+      function Plugin(element, options) {
+        // Set the plugin object
+        plugin.this = this;
+        plugin.element = element;
+        plugin.defaults = defaults;
+        plugin.options = options;
+        // Merge user settings with defaults
+        plugin.settings = deepMerge(defaults, options);
+  
+        // Initialize the plugin
+        plugin.this.init();
+      }
+  
+      //
+      // Methods
+      //
+  
+      /**
+       * If icon is true then create and setup icon
+       *
+       * @function accordionIconSetup
+       * @param  {String} toggle The toggle button
+       * @return {void}
+       */
+      const accordionIconSetup = function(toggle) {
+        const toggleBtn = toggle;
+        if (plugin.settings.icons === true) {
+          const iconContainer = document.createElement("span");
+          iconContainer.classList.add(plugin.settings.iconsSymbol);
+          iconContainer.classList.add(plugin.settings.iconsPosition);
+          toggle.appendChild(iconContainer);
+        } else {
+          toggleBtn.classList.add("icon-hidden");
+        }
+      };
+  
+      /**
+       * Setup plugin.settings.panelClass which contains the content
+       *
+       * @function accordionContentSetup
+       * @param  {String} content The accordion container.
+       * @param  {String} id The accordion id.
+       * @return {void}
+       */
+      const accordionContentSetup = function(content, id) {
+        // Get accordion content from plugin.settings.accordionClass container
+        const accordionPanel = content.querySelector(
+          `.${plugin.settings.panelClass}`
+        );
+        if (!accordionPanel) return;
+  
+        // Create div for accordion content add content class
+        const accordionContent = document.createElement("div");
+        accordionContent.className = plugin.settings.contentClass;
+        // Add content from panel
+        accordionContent.innerHTML = accordionPanel.innerHTML;
+  
+        // Clear accordion panel html since it was added to content div
+        accordionPanel.innerHTML = "";
+        // Append content div to accordion panel
+        accordionPanel.appendChild(accordionContent);
+  
+        accordionPanel.setAttribute("id", `accordion${id}`);
+  
+        // Check to see if the accordions are set to be expanded or collapsed
+        if (plugin.settings.expanded === false) {
+          accordionPanel.setAttribute("aria-hidden", "true");
+          accordionPanel.setAttribute("hidden", "");
+          accordionPanel.style.height = "0px";
+        } else {
+          accordionPanel.setAttribute("aria-hidden", "false");
+          accordionPanel.removeAttribute("hidden");
+          accordionPanel.style.height = `${accordionPanel.scrollHeight}px`;
+        }
+      };
+  
+      /**
+       * Setup plugin.settings.toggleBtnClass, the individual accordion toggle button
+       *
+       * @function accordionToggleSetup
+       * @param  {String} content The accordion button.
+       * @param  {String} btnId The accordion button id.
+       *
+       */
+      const accordionToggleSetup = function(content, btnId) {
+        // Get accordion header from plugin.settings.accordionClass
+        const accordionHeader = content.querySelector(
+          `.${plugin.settings.headerClass}`
+        );
+        if (!accordionHeader) return;
+  
+        // Create a toggle button, add toggle class and aria attributes
+        const toggle = document.createElement("button");
+        toggle.className = plugin.settings.toggleBtnClass;
+        toggle.setAttribute("aria-controls", `accordion${btnId}`);
+        // Check to see if the accordions are set to be expanded or collapsed
+        if (plugin.settings.expanded === false) {
+          toggle.setAttribute("aria-expanded", "false");
+        } else {
+          toggle.setAttribute("aria-expanded", "true");
+        }
+  
+        // Get content from existing header and add to button
+        toggle.innerHTML = accordionHeader.innerHTML;
+  
+        // Clear accordion header html since it was added to button
+        accordionHeader.innerHTML = "";
+        // Append button to accordion header
+        accordionHeader.appendChild(toggle);
+  
+        // Initialize the accordion content and icon
+        accordionContentSetup(content, btnId);
+        accordionIconSetup(toggle);
+      };
+  
+      /**
+       * Create and setup plugin.settings.expandAllClass
+       *
+       * @function toggleAllSetup
+       * @return {void}
+       */
+      const toggleAllSetup = function() {
+        // find first accodrion if only one the return
+        const firstAccordion = document.querySelector(
+          `.${plugin.settings.accordionClass}`
+        );
+  
+        if (!firstAccordion) return;
+  
+        // create button container
+        const buttonContainer = document.createElement("div");
+        buttonContainer.className = plugin.settings.expandAllContainerClass;
+  
+        // create expand all button
+        const button = document.createElement("button");
+        button.className = plugin.settings.expandAllClass;
+        // Check to see if the accordions are set to be expanded or collapsed
+        if (plugin.settings.expanded === false) {
+          button.setAttribute("aria-expanded", "false");
+          button.textContent = plugin.settings.expandAllOpenText;
+        } else {
+          button.setAttribute("aria-expanded", "true");
+          button.textContent = plugin.settings.expandAllCloseText;
+        }
+  
+        // insert button into container
+        buttonContainer.appendChild(button);
+  
+        // find parent element of first accordion
+        const parentContainer = firstAccordion.parentNode;
+  
+        // insert button container before first accordion
+        parentContainer.insertBefore(buttonContainer, firstAccordion);
+      };
+  
+      /**
+       *
+       *
+       * @function toggleButton
+       * @param  {String} targetElem  The toggle button
+       * @param  {String} direction   The direction of the accordion Expand/Collapse
+       * @return {void}
+       */
+      const toggleButton = function(targetElem, direction) {
+        if (direction === "expand") {
+          targetElem.setAttribute("aria-expanded", "true");
+        } else {
+          targetElem.setAttribute("aria-expanded", "false");
+        }
+      };
+  
+      /**
+       * @function toggleContent
+       * @param  {String} targetElem The Accordion button
+       * @param  {MouseEvent} event mouse or keyboard
+       * @param  {String} direction The direction of the accordion Expand/Collapse
+       * @return {void}
+       */
+      const toggleAccordion = function(targetElem, event, direction) {
+        const controls = targetElem.getAttribute("aria-controls");
+        const controlsElem = document.getElementById(controls);
+        const controlsElemHeight = controlsElem.scrollHeight;
+        const toggled = controlsElem.getAttribute("aria-hidden");
+  
+        if (event) {
+          event.preventDefault();
+        }
+  
+        function timeoutSet(element) {
+          setTimeout(function() {
+            element.style.height = "auto";
+          }, 300);
+        }
+  
+        if (direction === "expand" && toggled === "true") {
+          controlsElem.removeAttribute("hidden");
+          controlsElem.style.height = `${controlsElem.scrollHeight}px`;
+          controlsElem.setAttribute("aria-hidden", "false");
+          timeoutSet(controlsElem);
+        } else if (direction === "collapse" && toggled === "false") {
+          controlsElem.style.height = `${controlsElem.scrollHeight}px`;
+          controlsElem.setAttribute("aria-hidden", "true");
+          setTimeout(function() {
+            controlsElem.setAttribute("aria-hidden", true);
+            controlsElem.style.height = `${0}px`;
+          }, 50);
+          setTimeout(function() {
+            controlsElem.setAttribute("hidden", "");
+          }, 150);
+        }
+  
+        toggleButton(targetElem, direction);
+      };
+  
+      /**
+       * @function toggleAllContent
+       * @param  {String} targetElem The toggle all button
+       * @param  {MouseEvent} event mouse or keyboard
+       * @param  {String} direction The direction of the accordion Expand/Collapse
+       * @return {void}
+       */
+      const toggleAllAccordions = function(targetElem, event, direction) {
+        if (event) {
+          event.preventDefault();
+        }
+  
+        // Grab all accordion toggles in the document
+        const buttons = document.querySelectorAll(
+          `.${plugin.settings.toggleBtnClass}`
+        );
+        // Loop through each accordion
+        Array.prototype.forEach.call(buttons, function(button) {
+          toggleAccordion(button, event, direction);
+        });
+  
+        // After event toggle aria-expanded attribute
+        targetElem.setAttribute(
+          "aria-expanded",
+          targetElem.getAttribute("aria-expanded") === "true" ? "false" : "true"
+        );
+  
+        // After event toggle button text
+        targetElem.textContent =
+          targetElem.textContent === plugin.settings.expandAllOpenText
+            ? (targetElem.textContent = plugin.settings.expandAllCloseText)
+            : (targetElem.textContent = plugin.settings.expandAllOpenText);
+      };
+  
+      /**
+       * @function clickHandler
+       * @param  {String} event mouse click
+       * @return {type} {description}
+       */
+      const clickHandler = function(event) {
+        const toggleBtn = event.target.closest(
+          `.${plugin.settings.toggleBtnClass}`
+        );
+        const toggleAll = event.target.closest(
+          `.${plugin.settings.expandAllClass}`
+        );
+        
+        if(toggleBtn === null && toggleAll === null) return;
+  
+        if (toggleBtn) {
+          const directionBtn =
+          event.target
+            .closest(`.${plugin.settings.toggleBtnClass}`)
+            .getAttribute("aria-expanded") === "true"
+            ? "collapse"
+            : "expand";
+          toggleAccordion(toggleBtn, event, directionBtn);
+        }
+        if (toggleAll) {
+          const directionAll =
+          event.target
+            .closest(`.${plugin.settings.expandAllClass}`)
+            .getAttribute("aria-expanded") === "true"
+            ? "collapse"
+            : "expand";
+          toggleAllAccordions(toggleAll, event, directionAll);
+        }
+      };
+      /**
+       * @function keyboardHandler
+       * @param  {String} event keyboard press
+       * @return {type} {description}
+       */
+      const keyboardHandler = function(event) {
+        if (event.key == "Enter" || event.key == " ") {
+          const toggleBtn = event.target.closest(
+            `.${plugin.settings.toggleBtnClass}`
+          );
+          const toggleAll = event.target.closest(
+            `.${plugin.settings.expandAllClass}`
+          );
+          const direction =
+            event.target.getAttribute("aria-expanded") === "true"
+              ? "collapse"
+              : "expand";
+  
+          if (toggleBtn) {
+            event.preventDefault();
+            toggleAccordion(toggleBtn, event, direction);
+          }
+          if (toggleAll) {
+            event.preventDefault();
+            toggleAllAccordions(toggleAll, event, direction);
+          }
+        }
+      };
+  
+      /**
+       * Public variables and methods.
+       * @type {object}
+       */
+      Plugin.prototype = {
+        setup() {
+          const accordions = document.querySelectorAll(plugin.element);
+          let btnId = 0;
+          Array.prototype.forEach.call(accordions, function(accordion) {
+            btnId += 1;
+            accordionToggleSetup(accordion, btnId);
+          });
+  
+          if (plugin.settings.expandAllBtn && accordions.length > 1)
+            toggleAllSetup();
+        },
+  
+        /**
+         * Setup the accordion toggle button and aria attributes
+         *
+         * @function init
+         * @param {Object} options - User defined options
+         *
+         */
+        init() {
+          // If there are no accordions bail
+          if (!plugin.element) return false;
+  
+          // Setup items in the DOM
+          plugin.this.setup();
+  
+          // Add event mouse and keyboard listeners
+          document.addEventListener("click", clickHandler, false);
+          document.addEventListener("keydown", keyboardHandler, false);
+        },
+      };
+  
+      // Return the plugin
+      return Plugin;
+    }
+  );
+  
