@@ -139,7 +139,7 @@
         `.${plugin.settings.panelClass}`
       );
       if (!accordionPanel) return;
-      
+
       // Create div for accordion content add content class
       const accordionContent = document.createElement("div");
       accordionContent.className = plugin.settings.contentClass;
@@ -178,6 +178,7 @@
       const accordionHeader = content.querySelector(
         `.${plugin.settings.headerClass}`
       );
+
       if (!accordionHeader) return;
 
       // Create a toggle button, add toggle class and aria attributes
@@ -349,25 +350,25 @@
       const toggleAll = event.target.closest(
         `.${plugin.settings.expandAllClass}`
       );
-      
-      if(toggleBtn === null && toggleAll === null) return;
+
+      if (toggleBtn === null && toggleAll === null) return;
 
       if (toggleBtn) {
         const directionBtn =
-        event.target
-          .closest(`.${plugin.settings.toggleBtnClass}`)
-          .getAttribute("aria-expanded") === "true"
-          ? "collapse"
-          : "expand";
+          event.target
+            .closest(`.${plugin.settings.toggleBtnClass}`)
+            .getAttribute("aria-expanded") === "true"
+            ? "collapse"
+            : "expand";
         toggleAccordion(toggleBtn, event, directionBtn);
       }
       if (toggleAll) {
         const directionAll =
-        event.target
-          .closest(`.${plugin.settings.expandAllClass}`)
-          .getAttribute("aria-expanded") === "true"
-          ? "collapse"
-          : "expand";
+          event.target
+            .closest(`.${plugin.settings.expandAllClass}`)
+            .getAttribute("aria-expanded") === "true"
+            ? "collapse"
+            : "expand";
         toggleAllAccordions(toggleAll, event, directionAll);
       }
     };
@@ -405,23 +406,47 @@
      * @type {object}
      */
     Plugin.prototype = {
-      setup() {
-        const accordions = document.querySelectorAll(plugin.element);
+      nestedSetup(nestedAccordions, accordions) {
         let btnId = 0;
-        Array.prototype.forEach.call(accordions, function(accordion) {
+        //Loop over each accordion and setup
+        Array.prototype.forEach.call(nestedAccordions, function(accordion) {
           btnId += 1;
           accordionToggleSetup(accordion, btnId);
         });
 
-        if (plugin.settings.expandAllBtn && accordions.length > 1)
-          toggleAllSetup();
+        plugin.this.nonestedSetup(accordions, btnId);
+      },
+      nonestedSetup(accordions, btnId) {
+        //Loop over each accordion and setup
+        Array.prototype.forEach.call(accordions, function(accordion) {
+          btnId += 1;
+          accordionToggleSetup(accordion, btnId);
+        });
+      },
+      setup() {
+        //Check for nested accordions
+        const nestedAccordions = document.querySelectorAll(
+          `.${plugin.settings.panelClass} > ${plugin.element}`
+        );
+        const accordions = document.querySelectorAll(plugin.element);
+        if (nestedAccordions.length > 0) {
+          plugin.this.nestedSetup(nestedAccordions, accordions);
+          if (plugin.settings.expandAllBtn && accordions.length > 1)
+            toggleAllSetup();
+          return;
+        }
+        if (accordions) {
+          let btnId = 0;
+          plugin.this.nonestedSetup(accordions, btnId);
+          if (plugin.settings.expandAllBtn && accordions.length > 1)
+            toggleAllSetup();
+          return;
+        }
       },
 
       /**
-       * Setup the accordion toggle button and aria attributes
        *
        * @function init
-       * @param {Object} options - User defined options
        *
        */
       init() {
