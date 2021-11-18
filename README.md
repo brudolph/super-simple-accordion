@@ -67,6 +67,12 @@ This is just some example markup and can be changed to fit your needs. You will 
  2. A header with the class `.accordion__title`.
  3. A container for the content with the class `.accordion__panel`
 
+If you want an accordion to be opened by default add the following data attribute in the outer accordion wrapper.
+
+```html
+data-expanded="true"
+```
+
 ## Step 3. Include JavaScript
 If you are using the minified version and linking to it, include the accordion script and initialize it.
 

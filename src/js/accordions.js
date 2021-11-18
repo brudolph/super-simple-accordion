@@ -11,11 +11,7 @@
   }
 })(
   // eslint-disable-next-line no-nested-ternary
-  typeof global !== "undefined"
-    ? global
-    : typeof window !== "undefined"
-    ? window
-    : this,
+  typeof global !== "undefined" ? global : typeof window !== "undefined" ? window : this,
   function(window) {
     // Use strict mode
     "use strict";
@@ -66,14 +62,8 @@
         for (let key in arguments[i]) {
           // If it's an object, recursively merge
           // Otherwise, push to key
-          if (
-            Object.prototype.toString.call(arguments[i][key]) ===
-            "[object Object]"
-          ) {
-            arguments[0][key] = deepMerge(
-              arguments[0][key] || {},
-              arguments[i][key]
-            );
+          if (Object.prototype.toString.call(arguments[i][key]) === "[object Object]") {
+            arguments[0][key] = deepMerge(arguments[0][key] || {}, arguments[i][key]);
           } else {
             arguments[0][key] = arguments[i][key];
           }
@@ -135,9 +125,10 @@
      */
     const accordionContentSetup = function(content, id) {
       // Get accordion content from plugin.settings.accordionClass container
-      const accordionPanel = content.querySelector(
-        `.${plugin.settings.panelClass}`
-      );
+      const accordionPanel = content.querySelector(`.${plugin.settings.panelClass}`);
+
+      const expandedDefault = content.dataset.expanded;
+
       if (!accordionPanel) return;
 
       // Create div for accordion content add content class
@@ -154,11 +145,13 @@
       accordionPanel.setAttribute("id", `accordion${id}`);
 
       // Check to see if the accordions are set to be expanded or collapsed
-      if (plugin.settings.expanded === false) {
+      if (plugin.settings.expanded === false && expandedDefault != "true") {
         accordionPanel.setAttribute("aria-hidden", "true");
         accordionPanel.setAttribute("hidden", "");
         accordionPanel.style.height = "0px";
-      } else {
+      }
+
+      if (expandedDefault === "true") {
         accordionPanel.setAttribute("aria-hidden", "false");
         accordionPanel.removeAttribute("hidden");
         accordionPanel.style.height = `${accordionPanel.scrollHeight}px`;
@@ -175,9 +168,9 @@
      */
     const accordionToggleSetup = function(content, btnId) {
       // Get accordion header from plugin.settings.accordionClass
-      const accordionHeader = content.querySelector(
-        `.${plugin.settings.headerClass}`
-      );
+      const accordionHeader = content.querySelector(`.${plugin.settings.headerClass}`);
+
+      const expandedDefault = content.dataset.expanded;
 
       if (!accordionHeader) return;
 
@@ -188,7 +181,9 @@
       // Check to see if the accordions are set to be expanded or collapsed
       if (plugin.settings.expanded === false) {
         toggle.setAttribute("aria-expanded", "false");
-      } else {
+      }
+
+      if (plugin.settings.expanded === true || expandedDefault === "true") {
         toggle.setAttribute("aria-expanded", "true");
       }
 
@@ -213,9 +208,7 @@
      */
     const toggleAllSetup = function() {
       // find first accodrion if only one the return
-      const firstAccordion = document.querySelector(
-        `.${plugin.settings.accordionClass}`
-      );
+      const firstAccordion = document.querySelector(`.${plugin.settings.accordionClass}`);
 
       if (!firstAccordion) return;
 
@@ -298,7 +291,7 @@
         }, 50);
         setTimeout(function() {
           controlsElem.setAttribute("hidden", "");
-        }, 150);
+        }, 450);
       }
 
       toggleButton(targetElem, direction);
@@ -317,19 +310,14 @@
       }
 
       // Grab all accordion toggles in the document
-      const buttons = document.querySelectorAll(
-        `.${plugin.settings.toggleBtnClass}`
-      );
+      const buttons = document.querySelectorAll(`.${plugin.settings.toggleBtnClass}`);
       // Loop through each accordion
       Array.prototype.forEach.call(buttons, function(button) {
         toggleAccordion(button, event, direction);
       });
 
       // After event toggle aria-expanded attribute
-      targetElem.setAttribute(
-        "aria-expanded",
-        targetElem.getAttribute("aria-expanded") === "true" ? "false" : "true"
-      );
+      targetElem.setAttribute("aria-expanded", targetElem.getAttribute("aria-expanded") === "true" ? "false" : "true");
 
       // After event toggle button text
       targetElem.textContent =
@@ -344,31 +332,19 @@
      * @return {type} {description}
      */
     const clickHandler = function(event) {
-      const toggleBtn = event.target.closest(
-        `.${plugin.settings.toggleBtnClass}`
-      );
-      const toggleAll = event.target.closest(
-        `.${plugin.settings.expandAllClass}`
-      );
+      const toggleBtn = event.target.closest(`.${plugin.settings.toggleBtnClass}`);
+      const toggleAll = event.target.closest(`.${plugin.settings.expandAllClass}`);
 
       if (toggleBtn === null && toggleAll === null) return;
 
       if (toggleBtn) {
         const directionBtn =
-          event.target
-            .closest(`.${plugin.settings.toggleBtnClass}`)
-            .getAttribute("aria-expanded") === "true"
-            ? "collapse"
-            : "expand";
+          event.target.closest(`.${plugin.settings.toggleBtnClass}`).getAttribute("aria-expanded") === "true" ? "collapse" : "expand";
         toggleAccordion(toggleBtn, event, directionBtn);
       }
       if (toggleAll) {
         const directionAll =
-          event.target
-            .closest(`.${plugin.settings.expandAllClass}`)
-            .getAttribute("aria-expanded") === "true"
-            ? "collapse"
-            : "expand";
+          event.target.closest(`.${plugin.settings.expandAllClass}`).getAttribute("aria-expanded") === "true" ? "collapse" : "expand";
         toggleAllAccordions(toggleAll, event, directionAll);
       }
     };
@@ -379,16 +355,9 @@
      */
     const keyboardHandler = function(event) {
       if (event.key == "Enter" || event.key == " ") {
-        const toggleBtn = event.target.closest(
-          `.${plugin.settings.toggleBtnClass}`
-        );
-        const toggleAll = event.target.closest(
-          `.${plugin.settings.expandAllClass}`
-        );
-        const direction =
-          event.target.getAttribute("aria-expanded") === "true"
-            ? "collapse"
-            : "expand";
+        const toggleBtn = event.target.closest(`.${plugin.settings.toggleBtnClass}`);
+        const toggleAll = event.target.closest(`.${plugin.settings.expandAllClass}`);
+        const direction = event.target.getAttribute("aria-expanded") === "true" ? "collapse" : "expand";
 
         if (toggleBtn) {
           event.preventDefault();
@@ -410,7 +379,7 @@
         let btnId = 0;
         //Loop over each accordion and setup
         Array.prototype.forEach.call(nestedAccordions, function(accordion) {
-          btnId += 1;
+          btnId = Math.floor(Math.random() * 100000000 + 1);
           accordionToggleSetup(accordion, btnId);
         });
 
@@ -419,27 +388,23 @@
       nonestedSetup(accordions, btnId) {
         //Loop over each accordion and setup
         Array.prototype.forEach.call(accordions, function(accordion) {
-          btnId += 1;
+          btnId = Math.floor(Math.random() * 100000000 + 1);
           accordionToggleSetup(accordion, btnId);
         });
       },
       setup() {
         //Check for nested accordions
-        const nestedAccordions = document.querySelectorAll(
-          `.${plugin.settings.panelClass} > ${plugin.element}`
-        );
+        const nestedAccordions = document.querySelectorAll(`.${plugin.settings.panelClass} > ${plugin.element}`);
         const accordions = document.querySelectorAll(plugin.element);
         if (nestedAccordions.length > 0) {
           plugin.this.nestedSetup(nestedAccordions, accordions);
-          if (plugin.settings.expandAllBtn && accordions.length > 1)
-            toggleAllSetup();
+          if (plugin.settings.expandAllBtn && accordions.length > 1) toggleAllSetup();
           return;
         }
         if (accordions) {
           let btnId = 0;
           plugin.this.nonestedSetup(accordions, btnId);
-          if (plugin.settings.expandAllBtn && accordions.length > 1)
-            toggleAllSetup();
+          if (plugin.settings.expandAllBtn && accordions.length > 1) toggleAllSetup();
           return;
         }
       },

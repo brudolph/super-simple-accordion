@@ -16,7 +16,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, `${buildPath}/js`),
-    filename: 'accordions.js',
+    filename: 'accordions.min.js',
   },
 
   resolve: {
