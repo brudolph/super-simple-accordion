@@ -72,7 +72,7 @@ Below are the default options available. Only include the ones you plan to chang
 In your entry file:
 
 ```js
-import SuperSimpleAccordions from 'super-simple-accordions';
+import {SuperSimpleAccordions} from 'super-simple-accordions';
 
 if (document.querySelector(".accordion")) {
     const accordions = new SuperSimpleAccordions('.accordion', {
@@ -132,5 +132,5 @@ Super Simple Accordion works in all modern browsers.
 ## TODO
 
 * Include Jest unit testing
-* 
+
 

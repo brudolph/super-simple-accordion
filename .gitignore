@@ -24,7 +24,6 @@ yarn.lock
 .vscode
 
 build
-src/js/lib
 src/js/accordions.es6.js
 dist/js/accordion.js
 azure-pipelines.yml
