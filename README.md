@@ -133,4 +133,3 @@ Super Simple Accordion works in all modern browsers.
 
 * Include Jest unit testing
 
-
