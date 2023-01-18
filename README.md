@@ -1,3 +1,5 @@
+[![CodeQL](https://github.com/brudolph/super-simple-accordion/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/brudolph/super-simple-accordion/actions/workflows/codeql-analysis.yml)
+
 Super simple, accessible, content accordion.
 
 The instructions below are for installing Super Simple Accordion with NPM and using your favorite bundler to import.
