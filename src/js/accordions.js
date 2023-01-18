@@ -89,6 +89,12 @@ const accordionContentSetup = function (content, id) {
 
   if (!accordionPanel) return;
 
+  function timeoutSet(element) {
+    setTimeout(function () {
+      element.style.height = 'auto';
+    }, 300);
+  }
+
   // Create div for accordion content add content class
   const accordionContent = document.createElement('div');
   accordionContent.className = plugin.settings.contentClass;
@@ -114,6 +120,7 @@ const accordionContentSetup = function (content, id) {
     accordionPanel.setAttribute('aria-hidden', 'false');
     accordionPanel.removeAttribute('hidden');
     accordionPanel.style.height = `${accordionPanel.scrollHeight}px`;
+    timeoutSet(accordionPanel);
   }
 };
 
@@ -381,7 +388,9 @@ SuperSimpleAccordions.prototype = {
     const nestedAccordions = document.querySelectorAll(
       `.${plugin.settings.panelClass} > ${plugin.element}`
     );
+
     const accordions = document.querySelectorAll(plugin.element);
+
     if (nestedAccordions.length > 0) {
       plugin.this.nestedSetup(nestedAccordions, accordions);
       if (plugin.settings.expandAllBtn && accordions.length > 1)
