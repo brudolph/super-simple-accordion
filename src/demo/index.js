@@ -11,6 +11,8 @@ const accordions = new SuperSimpleAccordions('.accordion', {
 
   // Toggle Button
   toggleBtnClass: 'accordion__toggle',
+  // Toggle all other accordions closed when one is opened
+  toggleOthers: true,
 
   // Icons
   icons: true, // true or false

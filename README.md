@@ -57,7 +57,7 @@ In your project include the following markup.
 
 This is just some example markup and can be changed to fit your needs. You will just need these three elements:
 
- 1. A container for your accordion with the class `.accordion`. 
+ 1. A container for your accordion with the class `.accordion`.
  2. A header with the class `.accordion__title`.
  3. A container for the content with the class `.accordion__panel`
 
@@ -88,6 +88,8 @@ if (document.querySelector(".accordion")) {
 
        // Toggle Button
        toggleBtnClass: 'accordion__toggle',
+      // Toggle all other accordions closed when one is opened
+       toggleOthers: false,
 
        // Icons
        icons: true, // true or false
@@ -96,7 +98,7 @@ if (document.querySelector(".accordion")) {
        iconsPosition: 'left', // right or left
 
        // Expand All features
-       expandAllBtn: true, // true or false 
+       expandAllBtn: true, // true or false
        expandAllClass: 'accordion__toggle-all',
        expandAllContainerClass: 'accordion__toggle-all-container',
        expandSelectClass: 'expanded',
@@ -111,7 +113,7 @@ if (document.querySelector(".accordion")) {
 Download or clone the project - [Github repo](https://github.com/brudolph/super-simple-accordion)
 
 ```sh
-$ NPM install
+$ npm install
 
 ```
 
@@ -134,4 +136,3 @@ Super Simple Accordion works in all modern browsers.
 ## TODO
 
 * Include Jest unit testing
-

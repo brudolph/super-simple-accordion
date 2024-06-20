@@ -13,6 +13,8 @@ const defaults = {
 
   // Toggle Button
   toggleBtnClass: 'accordion__toggle',
+  // Toggle all other accordions closed when one is opened
+  toggleOthers: false,
 
   // Icons
   icons: true,
@@ -245,6 +247,31 @@ const toggleAccordion = function (targetElem, event, direction) {
     setTimeout(function () {
       element.style.height = 'auto';
     }, 300);
+  }
+
+  // Check if targetElem is inside plugin.settings.panelClass
+  const nestedAccordion = targetElem.closest(`.${plugin.settings.panelClass}`);
+
+  if (plugin.settings.toggleOthers && !nestedAccordion) {
+    // Close all accordions
+    const buttons = document.querySelectorAll(`.${plugin.settings.toggleBtnClass}`);
+    Array.prototype.forEach.call(buttons, function (button) {
+      const controls = button.getAttribute('aria-controls');
+      const controlsElem = document.getElementById(controls);
+      const toggled = controlsElem.getAttribute('aria-hidden');
+      if (toggled === 'false') {
+        controlsElem.style.height = `${controlsElem.scrollHeight}px`;
+        controlsElem.setAttribute('aria-hidden', 'true');
+        setTimeout(function () {
+          controlsElem.setAttribute('aria-hidden', true);
+          controlsElem.style.height = `${0}px`;
+        }, 50);
+        setTimeout(function () {
+          controlsElem.setAttribute('hidden', '');
+        }, 450);
+        toggleButton(button, 'collapse');
+      }
+    });
   }
 
   if (direction === 'expand' && toggled === 'true') {
