@@ -9,6 +9,7 @@ const accordions = new SuperSimpleAccordions('.accordion', {
   contentClass: 'accordion__content',
   panelClass: 'accordion__panel',
 
+  hidden: false,
   // Toggle Button
   toggleBtnClass: 'accordion__toggle',
   // Toggle all other accordions closed when one is opened

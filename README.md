@@ -86,6 +86,9 @@ if (document.querySelector(".accordion")) {
        contentClass: 'accordion__content',
        panelClass: 'accordion__panel',
 
+      //Whether to add the hidden attribute to the accordion content
+      hidden: true,
+
        // Toggle Button
        toggleBtnClass: 'accordion__toggle',
       // Toggle all other accordions closed when one is opened

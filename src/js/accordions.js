@@ -11,6 +11,9 @@ const defaults = {
   contentClass: 'accordion__content',
   panelClass: 'accordion__panel',
 
+  //Whether to add the hidden attribute to the accordion content
+  hidden: true,
+
   // Toggle Button
   toggleBtnClass: 'accordion__toggle',
   // Toggle all other accordions closed when one is opened
@@ -254,7 +257,9 @@ const toggleAccordion = function (targetElem, event, direction) {
 
   if (plugin.settings.toggleOthers && !nestedAccordion) {
     // Close all accordions
-    const buttons = document.querySelectorAll(`.${plugin.settings.toggleBtnClass}`);
+    const buttons = document.querySelectorAll(
+      `.${plugin.settings.toggleBtnClass}`
+    );
     Array.prototype.forEach.call(buttons, function (button) {
       const controls = button.getAttribute('aria-controls');
       const controlsElem = document.getElementById(controls);
@@ -267,7 +272,9 @@ const toggleAccordion = function (targetElem, event, direction) {
           controlsElem.style.height = `${0}px`;
         }, 50);
         setTimeout(function () {
-          controlsElem.setAttribute('hidden', '');
+          if (plugin.settings.hidden) {
+            controlsElem.setAttribute('hidden', '');
+          }
         }, 450);
         toggleButton(button, 'collapse');
       }
@@ -287,7 +294,9 @@ const toggleAccordion = function (targetElem, event, direction) {
       controlsElem.style.height = `${0}px`;
     }, 50);
     setTimeout(function () {
-      controlsElem.setAttribute('hidden', '');
+      if (plugin.settings.hidden) {
+        controlsElem.setAttribute('hidden', '');
+      }
     }, 450);
   }
 
