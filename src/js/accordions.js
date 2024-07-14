@@ -236,7 +236,7 @@ const toggleButton = function (targetElem, direction) {
  * @param  {String} direction The direction of the accordion Expand/Collapse
  * @return {void}
  */
-const toggleAccordion = function (targetElem, event, direction) {
+const toggleAccordion = function (targetElem, event, direction, expandAllButton) {
   const controls = targetElem.getAttribute('aria-controls');
   const controlsElem = document.getElementById(controls);
   const controlsElemHeight = controlsElem.scrollHeight;
@@ -255,7 +255,7 @@ const toggleAccordion = function (targetElem, event, direction) {
   // Check if targetElem is inside plugin.settings.panelClass
   const nestedAccordion = targetElem.closest(`.${plugin.settings.panelClass}`);
 
-  if (plugin.settings.toggleOthers && !nestedAccordion) {
+  if (plugin.settings.toggleOthers && !nestedAccordion && !expandAllButton) {
     // Close all accordions
     const buttons = document.querySelectorAll(
       `.${plugin.settings.toggleBtnClass}`
@@ -321,7 +321,7 @@ const toggleAllAccordions = function (targetElem, event, direction) {
   );
   // Loop through each accordion
   Array.prototype.forEach.call(buttons, function (button) {
-    toggleAccordion(button, event, direction);
+    toggleAccordion(button, event, direction, true);
   });
 
   // After event toggle aria-expanded attribute

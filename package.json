@@ -1,6 +1,6 @@
 {
   "name": "super-simple-accordion",
-  "version": "2.2.9",
+  "version": "2.3.0",
   "description": "Super simple, accessible accordion",
   "main": "./src/index.js",
   "scripts": {
