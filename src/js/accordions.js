@@ -32,6 +32,10 @@ const defaults = {
   expandAllOpenText: 'Expand All',
   expandAllCloseText: 'Collapse All',
   expanded: false, // expanded or collapsed by default
+
+  //accordion groups
+  groupedClass: 'accordion__grouped',
+  groupedExpandAllClass: 'accordion__toggle-all-grouped',
 };
 
 /**
@@ -180,6 +184,7 @@ const accordionToggleSetup = function (content, btnId) {
  * @return {void}
  */
 const toggleAllSetup = function () {
+  console.log('toggleAllSetup');
   // find first accodrion if only one the return
   const firstAccordion = document.querySelector(
     `.${plugin.settings.accordionClass}`
@@ -214,6 +219,52 @@ const toggleAllSetup = function () {
 };
 
 /**
+ * Create and setup plugin.settings.expandAllClass
+ *
+ * @function toggleAllGroupedSetup
+ * @return {void}
+ */
+const toggleAllGroupedSetup = function () {
+  const groupedContainers = document.querySelectorAll(
+    `.${plugin.settings.groupedClass}`
+  );
+
+  if (groupedContainers.length > 0) {
+    // Iterate over each grouped container
+    groupedContainers.forEach((groupContainer) => {
+      // find first accordion in the group
+      const firstAccordion = groupContainer.querySelector(
+        `.${plugin.settings.accordionClass}`
+      );
+
+      if (!firstAccordion) return;
+
+      // create button container
+      const buttonContainer = document.createElement('div');
+      buttonContainer.className = plugin.settings.expandAllContainerClass;
+
+      // create expand all button
+      const button = document.createElement('button');
+      button.className = plugin.settings.groupedExpandAllClass;
+      // Check to see if the accordions are set to be expanded or collapsed
+      if (plugin.settings.expanded === false) {
+        button.setAttribute('aria-expanded', 'false');
+        button.textContent = plugin.settings.expandAllOpenText;
+      } else {
+        button.setAttribute('aria-expanded', 'true');
+        button.textContent = plugin.settings.expandAllCloseText;
+      }
+
+      // insert button into container
+      buttonContainer.appendChild(button);
+
+      // insert button container before first accordion in the group
+      groupContainer.insertBefore(buttonContainer, firstAccordion);
+    });
+  }
+};
+
+/**
  *
  *
  * @function toggleButton
@@ -236,7 +287,12 @@ const toggleButton = function (targetElem, direction) {
  * @param  {String} direction The direction of the accordion Expand/Collapse
  * @return {void}
  */
-const toggleAccordion = function (targetElem, event, direction, expandAllButton) {
+const toggleAccordion = function (
+  targetElem,
+  event,
+  direction,
+  expandAllButton
+) {
   const controls = targetElem.getAttribute('aria-controls');
   const controlsElem = document.getElementById(controls);
   const controlsElemHeight = controlsElem.scrollHeight;
@@ -304,7 +360,7 @@ const toggleAccordion = function (targetElem, event, direction, expandAllButton)
 };
 
 /**
- * @function toggleAllContent
+ * @function toggleAllAccordions
  * @param  {String} targetElem The toggle all button
  * @param  {MouseEvent} event mouse or keyboard
  * @param  {String} direction The direction of the accordion Expand/Collapse
@@ -338,6 +394,42 @@ const toggleAllAccordions = function (targetElem, event, direction) {
 };
 
 /**
+ * @function toggleAllGroupedAccordions
+ * @param  {String} targetElem The toggle all button
+ * @param  {MouseEvent} event mouse or keyboard
+ * @param  {String} direction The direction of the accordion Expand/Collapse
+ * @return {void}
+ */
+const toggleAllGroupedAccordions = function (targetElem, event, direction) {
+  if (event) {
+    event.preventDefault();
+  }
+
+  const parentContainer = targetElem.closest(`.${plugin.settings.groupedClass}`);
+
+  // Grab all accordion toggles in the grouped container
+  const buttons = parentContainer.querySelectorAll(
+    `.${plugin.settings.toggleBtnClass}`
+  );
+  // Loop through each accordion
+  Array.prototype.forEach.call(buttons, function (button) {
+    toggleAccordion(button, event, direction, true);
+  });
+
+  // After event toggle aria-expanded attribute
+  targetElem.setAttribute(
+    'aria-expanded',
+    targetElem.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+  );
+
+  // After event toggle button text
+  targetElem.textContent =
+    targetElem.textContent === plugin.settings.expandAllOpenText
+      ? (targetElem.textContent = plugin.settings.expandAllCloseText)
+      : (targetElem.textContent = plugin.settings.expandAllOpenText);
+};
+
+/**
  * @function clickHandler
  * @param  {String} event mouse click
  * @return {type} {description}
@@ -345,8 +437,11 @@ const toggleAllAccordions = function (targetElem, event, direction) {
 const clickHandler = function (event) {
   const toggleBtn = event.target.closest(`.${plugin.settings.toggleBtnClass}`);
   const toggleAll = event.target.closest(`.${plugin.settings.expandAllClass}`);
+  const toggleAllGrouped = event.target.closest(
+    `.${plugin.settings.groupedExpandAllClass}`
+  );
 
-  if (toggleBtn === null && toggleAll === null) return;
+  if (toggleBtn === null && toggleAll === null && toggleAllGrouped === null) return;
 
   if (toggleBtn) {
     const directionBtn =
@@ -365,6 +460,15 @@ const clickHandler = function (event) {
         ? 'collapse'
         : 'expand';
     toggleAllAccordions(toggleAll, event, directionAll);
+  }
+  if (toggleAllGrouped) {
+    const directionAll =
+      event.target
+        .closest(`.${plugin.settings.groupedExpandAllClass}`)
+        .getAttribute('aria-expanded') === 'true'
+        ? 'collapse'
+        : 'expand';
+    toggleAllGroupedAccordions(toggleAllGrouped, event, directionAll);
   }
 };
 
@@ -419,25 +523,46 @@ SuperSimpleAccordions.prototype = {
       accordionToggleSetup(accordion, btnId);
     });
   },
+
   setup() {
-    //Check for nested accordions
+    // Check for nested accordions
     const nestedAccordions = document.querySelectorAll(
       `.${plugin.settings.panelClass} > ${plugin.element}`
     );
 
     const accordions = document.querySelectorAll(plugin.element);
 
+    // Check for grouped accordions
+    const groupedAccordions = document.querySelectorAll(
+      `.${plugin.settings.groupedClass}`
+    );
+
     if (nestedAccordions.length > 0) {
       plugin.this.nestedSetup(nestedAccordions, accordions);
-      if (plugin.settings.expandAllBtn && accordions.length > 1)
-        toggleAllSetup();
+
+      if (groupedAccordions.length > 0) {
+        if (plugin.settings.expandAllBtn && groupedAccordions.length > 1)
+          toggleAllGroupedSetup(groupedAccordions.length);
+      } else {
+        if (plugin.settings.expandAllBtn && accordions.length > 1)
+          toggleAllSetup();
+      }
+
       return;
     }
+
     if (accordions) {
       let btnId = 0;
       plugin.this.nonestedSetup(accordions, btnId);
-      if (plugin.settings.expandAllBtn && accordions.length > 1)
-        toggleAllSetup();
+
+      if (groupedAccordions.length > 0) {
+        if (plugin.settings.expandAllBtn && groupedAccordions.length > 1)
+          toggleAllGroupedSetup(groupedAccordions.length);
+      } else {
+        if (plugin.settings.expandAllBtn && accordions.length > 1)
+          toggleAllSetup();
+      }
+
       return;
     }
   },

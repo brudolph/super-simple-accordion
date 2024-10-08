@@ -55,6 +55,7 @@ In your project include the following markup.
 </div>
 ```
 
+
 This is just some example markup and can be changed to fit your needs. You will just need these three elements:
 
  1. A container for your accordion with the class `.accordion`.
@@ -66,6 +67,40 @@ If you want an accordion to be opened by default add the following data attribut
 ```html
 <div class="accordion" data-expanded="true">
 ```
+
+And to group accordions so the expand all button works just for the group, wrap each group in a `div` with the class `.accordion__grouped`.
+
+```html
+<div class="accordion__grouped">
+  <div class="accordion">
+   <h2 class="accordion__title">
+   What is an accordion?
+   </h2>
+   <div class="accordion__panel">
+     <p>
+       Accordions are useful when you want to toggle between hiding and showing large amounts of content. Great for FAQs!
+     </p>
+     <p>
+       Look at all of this beautiful content!
+     </p>
+     <p>
+       It all seems so gratuitous but ohhhhh so needed. I love hearing myself talk (type?)!
+     </p>
+   </div>
+   </div>
+
+   <div class="accordion">
+   <h2 class="accordion__title">
+     Who is involved?
+   </h2>
+   <div class="accordion__panel">
+     <p>Accordions are useful when you want to toggle between hiding and showing large amounts of content.</p>
+   </div>
+  </div>
+</div>
+```
+
+This will add an expand all button to each group. Once accordions are grouped the global expand all button will not be placed in the DOM.
 
 ## Step 3. Import the package
 
@@ -107,7 +142,11 @@ if (document.querySelector(".accordion")) {
        expandSelectClass: 'expanded',
        expandAllOpenText: 'Expand All',
        expandAllCloseText: 'Collapse All',
-       expanded: false, // accordions collapsed by default but an be expanded
+       expanded: false, // accordions collapsed by default but can be expanded
+
+       //accordion groups
+       groupedClass: 'accordion__grouped',
+       groupedExpandAllClass: 'accordion__toggle-all-grouped',
     })
   }
 ```
@@ -138,4 +177,4 @@ Super Simple Accordion works in all modern browsers.
 
 ## TODO
 
-* Include Jest unit testing
+* Share your ideas and create a pull request.
