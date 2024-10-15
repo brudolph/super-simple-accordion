@@ -10,17 +10,19 @@ const defaults = {
   headerClass: 'accordion__title',
   contentClass: 'accordion__content',
   panelClass: 'accordion__panel',
+  toggleBtnClass: 'accordion__toggle',
 
   //Whether to add the hidden attribute to the accordion content
   hidden: true,
 
-  // Toggle Button
-  toggleBtnClass: 'accordion__toggle',
   // Toggle all other accordions closed when one is opened
   toggleOthers: false,
+  // If true, the toggle button is already in the markup allowing for custom markup
+  toggleBtnSelfMarkup: false,
 
   // Icons
   icons: true,
+  iconsClass: 'accordion__icon',
   iconsSymbol: 'plus-minus', // arrow
   iconsPosition: 'left', // right
 
@@ -89,31 +91,27 @@ const accordionIconSetup = function (toggle) {
  * @return {void}
  */
 const accordionContentSetup = function (content, id) {
-  // Get accordion content from plugin.settings.accordionClass container
+  // Get accordion content
+  const accordionContent = content.querySelector(
+    `.${plugin.settings.contentClass}`
+  );
+  // Get accordion panel
   const accordionPanel = content.querySelector(
     `.${plugin.settings.panelClass}`
   );
 
   const expandedDefault = content.dataset.expanded;
 
-  if (!accordionPanel) return;
+  if (!accordionContent)
+    return console.error(
+      'No accordion content found. Please add an element with the class .accordion__content'
+    );
 
   function timeoutSet(element) {
     setTimeout(function () {
       element.style.height = 'auto';
     }, 300);
   }
-
-  // Create div for accordion content add content class
-  const accordionContent = document.createElement('div');
-  accordionContent.className = plugin.settings.contentClass;
-  // Add content from panel
-  accordionContent.innerHTML = accordionPanel.innerHTML;
-
-  // Clear accordion panel html since it was added to content div
-  accordionPanel.innerHTML = '';
-  // Append content div to accordion panel
-  accordionPanel.appendChild(accordionContent);
 
   accordionPanel.setAttribute('id', `accordion${id}`);
 
@@ -149,12 +147,39 @@ const accordionToggleSetup = function (content, btnId) {
 
   const expandedDefault = content.dataset.expanded;
 
-  if (!accordionHeader) return;
+  if (!accordionHeader)
+    return console.error(
+      'No accordion header found. Please add an element with the class .accordion__title'
+    );
 
-  // Create a toggle button, add toggle class and aria attributes
-  const toggle = document.createElement('button');
-  toggle.className = plugin.settings.toggleBtnClass;
-  toggle.setAttribute('aria-controls', `accordion${btnId}`);
+  let toggle;
+
+  if (!plugin.settings.toggleBtnSelfMarkup) {
+    console.log('toggleBtnSelfMarkup', plugin.settings.toggleBtnSelfMarkup);
+    // Create a toggle button, add toggle class and aria attributes
+    toggle = document.createElement('button');
+    toggle.className = plugin.settings.toggleBtnClass;
+    toggle.setAttribute('aria-controls', `accordion${btnId}`);
+
+    // Get content from existing header and add to button
+    toggle.innerHTML = accordionHeader.innerHTML;
+
+    // Clear accordion header html since it was added to button
+    accordionHeader.innerHTML = '';
+    // Append button to accordion header
+    accordionHeader.appendChild(toggle);
+  } else {
+    console.log('toggleBtnSelfMarkup', plugin.settings.toggleBtnSelfMarkup);
+    // Get the existing toggle button
+    toggle = content.querySelector(`.${plugin.settings.toggleBtnClass}`);
+    // Check if the toggle button exists
+    if (!toggle)
+      return console.error(
+        'No accordion toggle found. You have the toggleBtnSelfMarkup option set to true. Please add an element with the class .accordion__toggle'
+      );
+    toggle.setAttribute('aria-controls', `accordion${btnId}`);
+  }
+
   // Check to see if the accordions are set to be expanded or collapsed
   if (plugin.settings.expanded === false) {
     toggle.setAttribute('aria-expanded', 'false');
@@ -163,14 +188,6 @@ const accordionToggleSetup = function (content, btnId) {
   if (plugin.settings.expanded === true || expandedDefault === 'true') {
     toggle.setAttribute('aria-expanded', 'true');
   }
-
-  // Get content from existing header and add to button
-  toggle.innerHTML = accordionHeader.innerHTML;
-
-  // Clear accordion header html since it was added to button
-  accordionHeader.innerHTML = '';
-  // Append button to accordion header
-  accordionHeader.appendChild(toggle);
 
   // Initialize the accordion content and icon
   accordionContentSetup(content, btnId);
@@ -184,13 +201,15 @@ const accordionToggleSetup = function (content, btnId) {
  * @return {void}
  */
 const toggleAllSetup = function () {
-  console.log('toggleAllSetup');
   // find first accodrion if only one the return
   const firstAccordion = document.querySelector(
     `.${plugin.settings.accordionClass}`
   );
 
-  if (!firstAccordion) return;
+  if (!firstAccordion)
+    return console.error(
+      'No accordion found. Please add an element with the class .accordion'
+    );
 
   // create button container
   const buttonContainer = document.createElement('div');
@@ -237,7 +256,10 @@ const toggleAllGroupedSetup = function () {
         `.${plugin.settings.accordionClass}`
       );
 
-      if (!firstAccordion) return;
+      if (!firstAccordion)
+        return console.error(
+          'No accordion found. Please add an element with the class .accordion'
+        );
 
       // create button container
       const buttonContainer = document.createElement('div');
@@ -312,6 +334,7 @@ const toggleAccordion = function (
   const nestedAccordion = targetElem.closest(`.${plugin.settings.panelClass}`);
 
   if (plugin.settings.toggleOthers && !nestedAccordion && !expandAllButton) {
+    console.log('toggleOthers', plugin.settings.toggleOthers);
     // Close all accordions
     const buttons = document.querySelectorAll(
       `.${plugin.settings.toggleBtnClass}`
@@ -405,7 +428,9 @@ const toggleAllGroupedAccordions = function (targetElem, event, direction) {
     event.preventDefault();
   }
 
-  const parentContainer = targetElem.closest(`.${plugin.settings.groupedClass}`);
+  const parentContainer = targetElem.closest(
+    `.${plugin.settings.groupedClass}`
+  );
 
   // Grab all accordion toggles in the grouped container
   const buttons = parentContainer.querySelectorAll(
@@ -525,27 +550,24 @@ SuperSimpleAccordions.prototype = {
   },
 
   setup() {
+    // Destructure plugin settings for easier access
+    const { panelClass, groupedClass, expandAllBtn } = plugin.settings;
+
     // Check for nested accordions
     const nestedAccordions = document.querySelectorAll(
-      `.${plugin.settings.panelClass} > ${plugin.element}`
+      `.${panelClass} > ${plugin.element}`
     );
-
     const accordions = document.querySelectorAll(plugin.element);
-
-    // Check for grouped accordions
-    const groupedAccordions = document.querySelectorAll(
-      `.${plugin.settings.groupedClass}`
-    );
+    const groupedAccordions = document.querySelectorAll(`.${groupedClass}`);
 
     if (nestedAccordions.length > 0) {
       plugin.this.nestedSetup(nestedAccordions, accordions);
 
       if (groupedAccordions.length > 0) {
-        if (plugin.settings.expandAllBtn && groupedAccordions.length > 1)
+        if (expandAllBtn && groupedAccordions.length > 1)
           toggleAllGroupedSetup(groupedAccordions.length);
       } else {
-        if (plugin.settings.expandAllBtn && accordions.length > 1)
-          toggleAllSetup();
+        if (expandAllBtn && accordions.length > 1) toggleAllSetup();
       }
 
       return;
@@ -556,11 +578,10 @@ SuperSimpleAccordions.prototype = {
       plugin.this.nonestedSetup(accordions, btnId);
 
       if (groupedAccordions.length > 0) {
-        if (plugin.settings.expandAllBtn && groupedAccordions.length > 1)
+        if (expandAllBtn && groupedAccordions.length > 1)
           toggleAllGroupedSetup(groupedAccordions.length);
       } else {
-        if (plugin.settings.expandAllBtn && accordions.length > 1)
-          toggleAllSetup();
+        if (expandAllBtn && accordions.length > 1) toggleAllSetup();
       }
 
       return;

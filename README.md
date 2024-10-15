@@ -33,15 +33,17 @@ In your project include the following markup.
    What is an accordion?
  </h2>
  <div class="accordion__panel">
-     <p>
-       Accordions are useful when you want to toggle between hiding and showing large amounts of content.
-     </p>
-     <p>
-       Look at all of this beautiful content!
-     </p>
-     <p>
-       It all seems so gratuitous but ohhhhh so needed. I love hearing myself talk (type?)!
-     </p>
+    <div class="accordion__content">
+    <p>
+      Accordions are useful when you want to toggle between hiding and showing large amounts of content.
+    </p>
+    <p>
+      Look at all of this beautiful content!
+    </p>
+    <p>
+      It all seems so gratuitous but ohhhhh so needed. I love hearing myself talk (type?)!
+    </p>
+    </div>
  </div>
 </div>
 
@@ -50,17 +52,20 @@ In your project include the following markup.
    Who is involved?
  </h2>
  <div class="accordion__panel">
-     <p>Accordions are useful when you want to toggle between hiding and showing large amounts of content.</p>
+   <div class="accordion__content">
+    <p>Accordions are useful when you want to toggle between hiding and showing large amounts of content.</p>
+   </div>
  </div>
 </div>
 ```
 
 
-This is just some example markup and can be changed to fit your needs. You will just need these three elements:
+This is just some example markup and can be changed to fit your needs. You will just need these four elements:
 
  1. A container for your accordion with the class `.accordion`.
  2. A header with the class `.accordion__title`.
  3. A container for the content with the class `.accordion__panel`
+ 4. Inside of the `.accordion__panel` an element with the class `.accordion__content`
 
 If you want an accordion to be opened by default add the following data attribute in the outer accordion container.
 
@@ -74,18 +79,20 @@ And to group accordions so the expand all button works just for the group, wrap 
 <div class="accordion__grouped">
   <div class="accordion">
    <h2 class="accordion__title">
-   What is an accordion?
+    What is an accordion?
    </h2>
    <div class="accordion__panel">
-     <p>
-       Accordions are useful when you want to toggle between hiding and showing large amounts of content. Great for FAQs!
-     </p>
-     <p>
-       Look at all of this beautiful content!
-     </p>
-     <p>
-       It all seems so gratuitous but ohhhhh so needed. I love hearing myself talk (type?)!
-     </p>
+     <div class="accordion__content">
+       <p>
+         Accordions are useful when you want to toggle between hiding and showing large amounts of content. Great for FAQs!
+       </p>
+       <p>
+         Look at all of this beautiful content!
+       </p>
+       <p>
+         It all seems so gratuitous but ohhhhh so needed. I love hearing myself talk (type?)!
+       </p>
+     </div>
    </div>
    </div>
 
@@ -94,13 +101,31 @@ And to group accordions so the expand all button works just for the group, wrap 
      Who is involved?
    </h2>
    <div class="accordion__panel">
-     <p>Accordions are useful when you want to toggle between hiding and showing large amounts of content.</p>
+     <div class="accordion__content">
+      <p>Accordions are useful when you want to toggle between hiding and showing large amounts of content.</p>
+     </div>
    </div>
   </div>
 </div>
 ```
 
 This will add an expand all button to each group. Once accordions are grouped the global expand all button will not be placed in the DOM.
+
+One last feature is the ability to set your own toggle button markup. In your options set `toggleBtnSelfMarkup` to true. Just make sure to add the `toggleBtnClass` to your button. The default is `.accordion__toggle`.
+
+```html
+  <div class="accordion">
+   <h2 class="accordion__title">
+     <button class="accordion__toggle">Who is involved?</button>
+   </h2>
+    <div class="accordion__panel">
+       <div class="accordion__content">
+        <p>Accordions are useful when you want to toggle between hiding and showing large amounts of content.</p>
+       </div>
+     </div>
+    </div>
+  </div>
+```
 
 ## Step 3. Import the package
 
@@ -113,21 +138,22 @@ import {SuperSimpleAccordions} from 'super-simple-accordions';
 
 if (document.querySelector(".accordion")) {
     const accordions = new SuperSimpleAccordions('.accordion', {
-      // ALL available options
+      // ALL available options and their defaults
 
-      // Accordion parts
+      // Accordion parts classes
        accordionClass: 'accordion',
        headerClass: 'accordion__title',
+       toggleBtnClass: 'accordion__toggle',
        contentClass: 'accordion__content',
        panelClass: 'accordion__panel',
 
       //Whether to add the hidden attribute to the accordion content
       hidden: true,
 
-       // Toggle Button
-       toggleBtnClass: 'accordion__toggle',
       // Toggle all other accordions closed when one is opened
        toggleOthers: false,
+      // If true, the toggle button is already in the markup
+       toggleBtnSelfMarkup: false,
 
        // Icons
        icons: true, // true or false
